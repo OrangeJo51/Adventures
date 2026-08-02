@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Our Adventures</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="light">
+
+    <!-- Top Bar -->
+    <header class="top-bar">
+
+        <h1>❤️ Our Adventures</h1>
+
+        <div class="top-buttons">
+
+            <button id="themeToggle">
+                🌙
+            </button>
+
+        </div>
+
+    </header>
+
+    <!-- Search -->
+
+    <section class="search-section">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Search dates, tags, locations..."
+        >
+
+<button id="filterButton">
+    ☰ Filter
+</button>
+
+
+<!-- FILTER PANEL -->
+
+<div id="filterPanel" class="hidden">
+
+    <h2>Filters</h2>
+
+
+    <h3>Category</h3>
+
+    <div id="categoryFilters">
+        <!-- Categories appear here -->
+    </div>
+
+
+
+    <h3>Tags</h3>
+
+    <div id="tagFilters">
+        <!-- Tags appear here -->
+    </div>
+
+
+
+    <h3>Price</h3>
+
+    <label>
+        <input type="checkbox">
+        $
+    </label>
+
+    <label>
+        <input type="checkbox">
+        $$
+    </label>
+
+    <label>
+        <input type="checkbox">
+        $$$
+    </label>
+
+
+
+    <h3>Spoons</h3>
+
+    <label>
+        <input type="checkbox">
+        🥄
+    </label>
+
+    <label>
+        <input type="checkbox">
+        🥄🥄
+    </label>
+
+    <label>
+        <input type="checkbox">
+        🥄🥄🥄+
+    </label>
+
+
+    <button id="closeFilter">
+        Close
+    </button>
+
+
+</div>
+
+    </section>
+
+    <!-- Pinterest Grid -->
+
+    <main id="homePage">
+<div id="cardContainer">
+
+</div>
+
+    </main>
+<!-- SCROLL PAGE -->
+
+<section id="scrollPage" class="page hidden">
+
+
+    <div id="scrollContainer">
+
+
+        <div class="reel-card">
+
+
+            <div class="reel-image">
+                🌄
+            </div>
+
+
+            <div class="reel-info">
+
+
+                <h2>
+                    Skyline Drive Picnic
+                </h2>
+
+
+                <p>
+                    Watch the sunset, bring snacks, and take photos together.
+                </p>
+
+
+                <div class="reel-tags">
+
+                    <span>
+                        🌿 Outdoor
+                    </span>
+
+                    <span>
+                        🥄🥄
+                    </span>
+
+                    <span>
+                        💰 $
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="reel-actions">
+
+
+                <button>
+                    ❤️
+                    <span>
+                        Wishlist
+                    </span>
+                </button>
+
+
+                <button>
+                    ✅
+                    <span>
+                        Finished
+                    </span>
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- PHOTO IDEAS PAGE -->
+
+<section id="photosPage" class="page hidden">
+
+
+    <h2>
+        📸 Photo Ideas
+    </h2>
+
+
+    <div id="photoContainer">
+
+
+        <div class="photo-card">
+
+
+            <div class="photo-image">
+
+                📷
+
+            </div>
+
+
+
+            <h2>
+
+                Sunset Silhouette
+
+            </h2>
+
+
+
+            <p>
+
+                Take a photo of us holding hands during sunset.
+
+            </p>
+
+
+
+            <div class="photo-tags">
+
+                <span>
+                    🌅 Sunset
+                </span>
+
+
+                <span>
+                    💕 Couple
+                </span>
+
+
+            </div>
+
+
+
+            <button>
+
+                ❤️ Wishlist Photo
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- WISHLIST PAGE -->
+
+<section id="wishlistPage" class="page hidden">
+
+    <h2>❤️ Wishlist</h2>
+
+    <div id="wishlistContainer">
+
+    </div>
+
+</section>
+
+
+
+<!-- COMPLETED PAGE -->
+
+<section id="completedPage" class="page hidden">
+
+    <h2>✅ Completed</h2>
+
+    <div id="completedContainer">
+
+    </div>
+
+</section>
+
+
+
+<!-- ADD PAGE -->
+
+<section id="addPage" class="page hidden">
+
+    <h2>➕ Add Idea</h2>
+
+
+    <input placeholder="Idea Name">
+
+
+    <input placeholder="Category">
+
+
+    <textarea placeholder="Description"></textarea>
+
+
+    <button>
+        Save Idea
+    </button>
+
+
+</section>
+    <!-- Bottom Navigation -->
+
+    <nav class="bottom-nav">
+
+        <button class="navButton" data-page="home">
+            🏠
+            <span>Home</span>
+        </button>
+
+        <button class="navButton" data-page="scroll">
+            🎥
+            <span>Scroll</span>
+        </button>
+
+        <button class="navButton" data-page="photos">
+            📸
+            <span>Photos</span>
+        </button>
+
+        <button class="navButton" data-page="wishlist">
+            ❤️
+            <span>Wishlist</span>
+        </button>
+
+        <button class="navButton" data-page="completed">
+            ✅
+            <span>Completed</span>
+        </button>
+
+        <button class="navButton" data-page="add">
+            ➕
+            <span>Add</span>
+        </button>
+
+    </nav>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
