@@ -60,6 +60,8 @@ const pages = {
 
     surprise: document.getElementById("surprisePage"),
 
+    details: document.getElementById("detailsPage"),
+    
     add: document.getElementById("addPage")
 
 };
@@ -358,7 +360,9 @@ if(location === "completed"){
 return `
 
 
-<div class="date-card" data-id="${idea.ID}">
+<div class="date-card"
+     data-id="${idea.ID}"
+     onclick="openDetails('${idea.ID}')">
 
 
 <div class="card-image">
@@ -884,3 +888,52 @@ function randomDate(){
     }
 
 }
+
+function openDetails(id){
+
+    const idea =
+    dateIdeas.find(item => item.ID === id);
+
+    if(!idea) return;
+
+    const container =
+    document.getElementById("detailsContainer");
+
+    container.innerHTML = `
+
+        <div class="details-card">
+
+            <img
+                src="${idea.Image}"
+                class="details-image"
+            >
+
+            <h1>${idea.Name}</h1>
+
+            <p>${idea.Description}</p>
+
+            <p><strong>Category:</strong> ${idea.Category}</p>
+
+            <p><strong>Tags:</strong> ${idea.Tags}</p>
+
+            <p><strong>Price:</strong> ${idea.Price}</p>
+
+            <p><strong>Distance:</strong> ${idea.Distance}</p>
+
+            <p><strong>Spoons:</strong> ${idea.Spoons}</p>
+
+        </div>
+
+    `;
+
+    showPage("details");
+
+}
+
+document
+.getElementById("backButton")
+.addEventListener("click",()=>{
+
+    showPage("home");
+
+});

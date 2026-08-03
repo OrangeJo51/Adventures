@@ -719,3 +719,45 @@ button:hover {
 
 
 }
+
+/* =========================
+   DETAILS PAGE
+========================= */
+
+#detailsContainer{
+
+    max-width:900px;
+
+    margin:auto;
+
+}
+
+.details-image{
+
+    width:100%;
+
+    border-radius:20px;
+
+    margin-bottom:20px;
+
+}
+
+.details-card h1{
+
+    margin-bottom:15px;
+
+}
+
+.details-card p{
+
+    margin-bottom:12px;
+
+    line-height:1.6;
+
+}
+
+#backButton{
+
+    margin-bottom:20px;
+
+}
