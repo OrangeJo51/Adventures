@@ -387,17 +387,16 @@ ${idea.Tags
 <div class="card-buttons">
 
 
-<button onclick="addWishlist('${idea.Name}')">
+<button onclick="addWishlist('${idea.ID}')">
 
-❤️ Wishlist
+    ❤️ Wishlist
 
 </button>
 
 
+<button onclick="addCompleted('${idea.ID}')">
 
-<button onclick="addCompleted('${idea.Name}')">
-
-✅ Finished
+    ✅ Finished
 
 </button>
 
@@ -453,33 +452,13 @@ createCard(idea);
 
 
 
-function addWishlist(name){
+function addWishlist(id){
 
 
-if(!wishlist.includes(name)){
+if(!wishlist.includes(id)){
 
 
-wishlist.push(name);
-
-
-}
-
-
-updateSavedPages();
-
-
-}
-
-
-
-
-function addCompleted(name){
-
-
-if(!completed.includes(name)){
-
-
-completed.push(name);
+wishlist.push(id);
 
 
 }
@@ -492,34 +471,46 @@ updateSavedPages();
 
 
 
-function createSavedCard(name){
+function addCompleted(id){
+
+    if(!completed.includes(id)){
+
+        completed.push(id);
+
+    }
+
+    updateSavedPages();
+
+}
 
 
-return `
+function createSavedCard(id){
+
+    const idea = dateIdeas.find(item => item.ID === id);
 
 
-<div class="date-card">
+    if(!idea){
+
+        return "";
+
+    }
 
 
-<h2>
+    return `
 
-${name}
+    <div class="date-card">
 
-</h2>
+        <h2>
+            ${idea.Name}
+        </h2>
 
+        <p>
+            ${idea.Description}
+        </p>
 
-<p>
+    </div>
 
-Saved Adventure
-
-</p>
-
-
-</div>
-
-
-`;
-
+    `;
 
 }
 
