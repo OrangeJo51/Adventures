@@ -707,3 +707,73 @@ ${tag}
 
 
 loadDates();
+// =============================
+// SEARCH
+// =============================
+
+const searchBox = document.getElementById("search");
+
+
+if(searchBox){
+
+    searchBox.addEventListener("input",()=>{
+
+
+        const term =
+        searchBox.value.toLowerCase();
+
+
+
+        const filtered =
+        dateIdeas.filter(idea => {
+
+
+            return (
+
+                idea.Name.toLowerCase().includes(term) ||
+
+                idea.Description.toLowerCase().includes(term) ||
+
+                idea.Category.toLowerCase().includes(term) ||
+
+                idea.Tags.toLowerCase().includes(term) ||
+
+                idea.Distance.toLowerCase().includes(term)
+
+            );
+
+
+        });
+
+
+
+        displayFilteredDates(filtered);
+
+
+    });
+
+}
+function displayFilteredDates(list){
+
+
+const container =
+document.getElementById("cardContainer");
+
+
+if(!container) return;
+
+
+container.innerHTML = "";
+
+
+list.forEach(idea=>{
+
+
+container.innerHTML +=
+createCard(idea);
+
+
+});
+
+
+}
