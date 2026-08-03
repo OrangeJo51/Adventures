@@ -60,9 +60,9 @@ const pages = {
 
     surprise: document.getElementById("surprisePage"),
 
-    details: document.getElementById("detailsPage"),
-    
-    add: document.getElementById("addPage")
+    add: document.getElementById("addPage"),
+
+    details: document.getElementById("detailsPage")
 
 };
 
@@ -359,10 +359,10 @@ if(location === "completed"){
 
 return `
 
-
-<div class="date-card"
-     data-id="${idea.ID}"
-     onclick="openDetails('${idea.ID}')">
+<div
+    class="date-card"
+    data-id="${idea.ID}"
+    onclick="openDetails('${idea.ID}')">
 
 
 <div class="card-image">
@@ -625,7 +625,7 @@ document.getElementById("completedContainer");
 
 if(wishlistBox){
 
-    wishlistBox.innerHTML = "";
+    wishlistBox.innerHTML += createCard(idea);
 
 
     dateIdeas
@@ -638,7 +638,7 @@ if(wishlistBox){
     .forEach(idea=>{
 
 
-        wishlistBox.innerHTML +=
+        completedBox.innerHTML += createCard(idea);
         createCard(idea,"wishlist");
 
 
@@ -896,37 +896,55 @@ function openDetails(id){
 
     if(!idea) return;
 
-    const container =
-    document.getElementById("detailsContainer");
+    showPage("details");
 
-    container.innerHTML = `
+    document.getElementById("detailsContainer").innerHTML = `
 
-        <div class="details-card">
+        <div class="date-card">
 
-            <img
-                src="${idea.Image}"
-                class="details-image"
-            >
+            <div class="card-image">
 
-            <h1>${idea.Name}</h1>
+                <img src="${idea.Image}">
+
+            </div>
+
+            <h2>${idea.Name}</h2>
 
             <p>${idea.Description}</p>
 
-            <p><strong>Category:</strong> ${idea.Category}</p>
+            <div class="card-info">
 
-            <p><strong>Tags:</strong> ${idea.Tags}</p>
+                <span>📂 ${idea.Category}</span>
 
-            <p><strong>Price:</strong> ${idea.Price}</p>
+                <span>🏷️ ${idea.Tags}</span>
 
-            <p><strong>Distance:</strong> ${idea.Distance}</p>
+                <span>💰 ${idea.Price}</span>
 
-            <p><strong>Spoons:</strong> ${idea.Spoons}</p>
+                <span>📍 ${idea.Distance}</span>
+
+                <span>🥄 ${idea.Spoons}</span>
+
+            </div>
+
+            <div class="card-buttons">
+
+                <button onclick="addWishlist('${idea.ID}')">
+
+                    ❤️ Wishlist
+
+                </button>
+
+                <button onclick="addCompleted('${idea.ID}')">
+
+                    ✅ Completed
+
+                </button>
+
+            </div>
 
         </div>
 
     `;
-
-    showPage("details");
 
 }
 
