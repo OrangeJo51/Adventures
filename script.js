@@ -273,6 +273,7 @@ async function loadDates(){
 
         displayDates();
 
+        updateSavedPages();
 
         createFilters();
 
@@ -432,7 +433,9 @@ container.innerHTML = "";
 
 
 
-dateIdeas.forEach(idea=>{
+dateIdeas
+.filter(idea => idea.Wishlist !== "TRUE" && idea.Completed !== "TRUE")
+.forEach(idea=>{
 
 
 container.innerHTML +=
@@ -596,8 +599,7 @@ function updateSavedPages(){
         .filter(idea => idea.Wishlist === "TRUE")
         .forEach(idea => {
 
-            wishlistBox.innerHTML +=
-            createSavedCard(idea.ID, "wishlist");
+            wishlistBox.innerHTML += createSavedCard(idea.ID);
 
         });
 
@@ -613,8 +615,7 @@ function updateSavedPages(){
         .filter(idea => idea.Completed === "TRUE")
         .forEach(idea => {
 
-            completedBox.innerHTML +=
-            createSavedCard(idea.ID, "completed");
+            completedBox.innerHTML += createSavedCard(idea.ID);
 
         });
 
