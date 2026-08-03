@@ -547,21 +547,24 @@ document.getElementById("completedContainer");
 
 
 
-if(wishlistBox){
+if(completedBox){
+
+    completedBox.innerHTML = "";
 
 
-wishlistBox.innerHTML = "";
+    completed.forEach(item=>{
+
+        completedBox.innerHTML +=
+        createSavedCard(item);
+
+    });
+
+}
 
 
-wishlist.forEach(item=>{
+// Refresh cards so buttons update
 
-
-wishlistBox.innerHTML +=
-createSavedCard(item);
-
-
-});
-
+displayDates();
 
 }
 
