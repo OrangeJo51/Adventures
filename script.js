@@ -432,7 +432,7 @@ container.innerHTML = "";
 
 
 dateIdeas
-.filter(idea => idea.Wishlist !== "TRUE" && idea.Completed !== "TRUE")
+.filter(idea => idea.Completed !== "TRUE")
 .forEach(idea=>{
 
 
@@ -623,7 +623,10 @@ function updateSavedPages(){
         wishlistBox.innerHTML = "";
 
         dateIdeas
-        .filter(idea => idea.Wishlist === "TRUE")
+        .filter(
+            idea => idea.Wishlist === "TRUE"
+            && idea.Completed !== "TRUE"
+        )
         .forEach(idea => {
 
             wishlistBox.innerHTML += createSavedCard(idea.ID,"wishlist");
