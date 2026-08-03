@@ -537,7 +537,6 @@ function createSavedCard(id){
 function updateSavedPages(){
 
 
-
 const wishlistBox =
 document.getElementById("wishlistContainer");
 
@@ -566,33 +565,8 @@ if(completedBox){
 
 displayDates();
 
-}
-
-
-
-
-if(completedBox){
-
-
-completedBox.innerHTML = "";
-
-
-completed.forEach(item=>{
-
-
-completedBox.innerHTML +=
-createSavedCard(item);
-
-
-});
-
 
 }
-
-
-
-}
-
 
 // =============================
 // FILTER CREATION
