@@ -1,7 +1,10 @@
 /* =========================
    OUR ADVENTURES
-   Main Design
+   Version 2 Styling
 ========================= */
+
+
+/* RESET */
 
 * {
     box-sizing: border-box;
@@ -10,255 +13,157 @@
     font-family: Arial, sans-serif;
 }
 
+
 body {
+
     min-height: 100vh;
+
     padding-bottom: 90px;
-    transition: background 0.3s, color 0.3s;
+
+    transition: 
+        background 0.3s ease,
+        color 0.3s ease;
+
 }
 
 
-/* LIGHT MODE */
+/* =========================
+   THEMES
+========================= */
+
 
 body.light {
+
     background: #faf7f2;
+
     color: #333;
+
 }
 
-
-/* DARK MODE */
 
 body.dark {
+
     background: #171717;
+
     color: #f5f5f5;
+
 }
 
 
-/* TOP BAR */
-
-.top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
 
 .light .top-bar {
+
     background: #faf7f2;
+
 }
 
+
 .dark .top-bar {
+
     background: #171717;
+
 }
+
+
+
+/* =========================
+   TOP BAR
+========================= */
+
+
+.top-bar {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 20;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 18px;
+
+}
+
 
 
 .top-bar h1 {
+
     font-size: 22px;
+
 }
 
 
-/* BUTTONS */
+
+/* =========================
+   BUTTONS
+========================= */
+
 
 button {
+
     border: none;
+
     cursor: pointer;
+
     border-radius: 12px;
+
     padding: 10px;
-    font-size: 16px;
+
+    font-size: 15px;
+
 }
 
 
-/* SEARCH AREA */
+
+button:hover {
+
+    opacity: .85;
+
+}
+
+
+
+/* =========================
+   SEARCH + FILTER
+========================= */
+
 
 .search-section {
+
     display: flex;
+
     gap: 10px;
+
     padding: 15px;
+
 }
+
 
 
 .search-section input {
+
     flex: 1;
+
     padding: 12px;
+
     border-radius: 15px;
+
     border: 1px solid #ccc;
+
     font-size: 15px;
-}
-
-
-/* HOME GRID */
-
-#cardContainer {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    padding: 15px;
-}
-
-
-/* SAMPLE CARD STYLE */
-
-.date-card {
-    border-radius: 18px;
-    overflow: hidden;
-    min-height: 180px;
-    padding: 15px;
-}
-
-
-.light .date-card {
-    background: white;
-}
-
-
-.dark .date-card {
-    background: #262626;
-}
-
-
-/* BOTTOM NAVIGATION */
-
-.bottom-nav {
-
-    position: fixed;
-    bottom: 0;
-    left: 0;
-
-    width: 100%;
-
-    display: flex;
-    justify-content: space-around;
-
-    padding: 10px;
-
-    z-index: 20;
-}
-
-
-.light .bottom-nav {
-    background: white;
-    border-top: 1px solid #ddd;
-}
-
-
-.dark .bottom-nav {
-    background: #222;
-    border-top: 1px solid #444;
-}
-
-
-.navButton {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    background: transparent;
-
-    font-size: 12px;
 
 }
 
 
-.navButton span {
-    margin-top: 4px;
-}
 
-
-/* MOBILE FRIENDLY */
-
-@media (max-width: 600px) {
-
-    #cardContainer {
-        grid-template-columns: 1fr;
-    }
-
-}/* =====================
-   DATE CARDS
-===================== */
-
-
-.card-image {
-
-    height: 180px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    font-size: 70px;
-
-    background: #ddd;
-
-}
-
-
-.date-card h2 {
-
-    margin-top: 12px;
-
-    font-size: 18px;
-
-}
-
-
-.date-card p {
-
-    margin-top: 8px;
-
-    font-size: 14px;
-
-}
-
-
-.card-info {
-
-    display: flex;
-
-    gap: 8px;
-
-    flex-wrap: wrap;
-
-    margin-top: 12px;
-
-}
-
-
-.card-info span {
-
-    background: #eee;
-
-    padding: 5px 8px;
-
-    border-radius: 10px;
-
-    font-size: 12px;
-
-}
-
-
-.card-buttons {
-
-    display: flex;
-
-    gap: 8px;
-
-    margin-top: 15px;
-
-}
-
-
-.card-buttons button {
-
-    flex: 1;
-
-}/* =====================
-   PINTEREST STYLE CARDS
-===================== */
+/* =========================
+   HOME GRID
+========================= */
 
 
 #cardContainer {
@@ -273,6 +178,11 @@ button {
 
 
 
+/* =========================
+   DATE CARDS
+========================= */
+
+
 .date-card {
 
     break-inside: avoid;
@@ -283,9 +193,7 @@ button {
 
     overflow: hidden;
 
-    padding: 0;
-
-    transition: transform 0.2s ease;
+    transition: transform .2s ease;
 
 }
 
@@ -299,11 +207,30 @@ button {
 
 
 
+.light .date-card {
+
+    background: white;
+
+}
+
+
+
+.dark .date-card {
+
+    background: #262626;
+
+}
+
+
+
+/* IMAGE AREA */
+
+
 .card-image {
 
-    height: 230px;
-
     width: 100%;
+
+    height: 230px;
 
     display: flex;
 
@@ -311,39 +238,174 @@ button {
 
     align-items: center;
 
-    font-size: 80px;
+    font-size: 70px;
+
+    background: #ddd;
 
 }
 
 
 
-.date-card h2,
-.date-card p,
-.card-info,
-.card-buttons {
+.card-image img {
 
-    padding-left: 15px;
+    width: 100%;
 
-    padding-right: 15px;
+    height: 100%;
+
+    object-fit: cover;
 
 }
+
+
+
+/* CARD TEXT */
 
 
 .date-card h2 {
 
-    margin-top: 15px;
+    padding: 15px 15px 0;
+
+    font-size: 18px;
 
 }
 
 
 
+.date-card p {
+
+    padding: 10px 15px;
+
+    font-size: 14px;
+
+}
+
+
+
+/* INFO TAGS */
+
+
+.card-info {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    padding: 0 15px;
+
+}
+
+
+
+.card-info span {
+
+    background: #eee;
+
+    padding: 6px 9px;
+
+    border-radius: 12px;
+
+    font-size: 12px;
+
+}
+
+
+
+/* CARD BUTTONS */
+
+
 .card-buttons {
 
-    padding-bottom: 15px;
+    display: flex;
 
-}/* =====================
+    gap: 10px;
+
+    padding: 15px;
+
+}
+
+
+
+.card-buttons button {
+
+    flex: 1;
+
+}
+
+
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+
+.bottom-nav {
+
+    position: fixed;
+
+    bottom: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: space-around;
+
+    padding: 10px;
+
+    z-index: 30;
+
+}
+
+
+
+.light .bottom-nav {
+
+    background: white;
+
+    border-top: 1px solid #ddd;
+
+}
+
+
+
+.dark .bottom-nav {
+
+    background: #222;
+
+    border-top: 1px solid #444;
+
+}
+
+
+
+.navButton {
+
+    background: transparent;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    font-size: 12px;
+
+}
+
+
+
+.navButton span {
+
+    margin-top: 4px;
+
+}
+/* =========================
    FILTER PANEL
-===================== */
+========================= */
 
 
 #filterPanel {
@@ -386,9 +448,9 @@ button {
 
 
 
-.hidden {
+#filterPanel h2 {
 
-    display: none;
+    margin-bottom: 20px;
 
 }
 
@@ -397,6 +459,8 @@ button {
 #filterPanel h3 {
 
     margin-top: 20px;
+
+    margin-bottom: 10px;
 
 }
 
@@ -409,9 +473,12 @@ button {
     margin: 8px 0;
 
 }
-/* =====================
+
+
+
+/* =========================
    PAGE SYSTEM
-===================== */
+========================= */
 
 
 .page {
@@ -421,6 +488,7 @@ button {
 }
 
 
+
 .hidden {
 
     display: none;
@@ -428,45 +496,15 @@ button {
 }
 
 
-.scroll-card {
 
-    min-height: 70vh;
-
-    border-radius: 20px;
-
-    padding: 25px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    text-align: center;
-
-}
-
-
-.light .scroll-card {
-
-    background: white;
-
-}
-
-
-.dark .scroll-card {
-
-    background: #262626;
-
-}
-/* =====================
-   TIKTOK STYLE SCROLL
-===================== */
+/* =========================
+   SCROLL PAGE
+========================= */
 
 
 #scrollContainer {
 
-    height: calc(100vh - 140px);
+    height: calc(100vh - 160px);
 
     overflow-y: scroll;
 
@@ -505,6 +543,7 @@ button {
 }
 
 
+
 .dark .reel-card {
 
     background: #262626;
@@ -541,9 +580,9 @@ button {
 
     display: flex;
 
-    gap: 8px;
+    gap: 10px;
 
-    margin-top: 12px;
+    margin-top: 15px;
 
 }
 
@@ -551,7 +590,9 @@ button {
 
 .reel-tags span {
 
-    padding: 6px;
+    background: #eee;
+
+    padding: 6px 10px;
 
     border-radius: 12px;
 
@@ -586,108 +627,95 @@ button {
     align-items: center;
 
 }
-/* =====================
-   PHOTO IDEAS
-===================== */
-
-
-#photoContainer {
-
-    columns: 2 250px;
-
-    column-gap: 15px;
-
-}
 
 
 
-.photo-card {
-
-    break-inside: avoid;
-
-    margin-bottom: 15px;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-
-    padding-bottom: 15px;
-
-}
+/* =========================
+   LIST PAGES
+========================= */
 
 
-
-.light .photo-card {
-
-    background: white;
-
-}
-
-
-
-.dark .photo-card {
-
-    background: #262626;
-
-}
-
-
-
-.photo-image {
-
-    height: 220px;
+#wishlistContainer,
+#completedContainer,
+#surpriseContainer {
 
     display: flex;
 
-    justify-content: center;
+    flex-direction: column;
 
-    align-items: center;
-
-    font-size: 90px;
-
-    background: #ddd;
+    gap: 15px;
 
 }
 
 
 
-.photo-card h2,
-.photo-card p,
-.photo-card button,
-.photo-tags {
-
-    margin-left: 15px;
-
-    margin-right: 15px;
-
-}
+/* =========================
+   ADD PAGE
+========================= */
 
 
+#addPage input,
+#addPage textarea {
 
-.photo-card h2 {
+    width: 100%;
 
-    margin-top: 15px;
+    margin: 10px 0;
 
-}
-
-
-
-.photo-tags {
-
-    display: flex;
-
-    gap: 8px;
-
-    margin-top: 12px;
-
-}
-
-
-
-.photo-tags span {
-
-    padding: 6px;
+    padding: 12px;
 
     border-radius: 12px;
+
+    border: 1px solid #ccc;
+
+}
+
+
+
+#addPage textarea {
+
+    min-height: 120px;
+
+}
+
+
+
+/* =========================
+   SURPRISE BUTTON
+========================= */
+
+
+#randomButton {
+
+    margin-top: 20px;
+
+    width: 100%;
+
+    font-size: 18px;
+
+}
+
+
+
+/* =========================
+   MOBILE
+========================= */
+
+
+@media(max-width:600px){
+
+
+    #cardContainer {
+
+        columns: 1;
+
+    }
+
+
+    .top-bar h1 {
+
+        font-size: 18px;
+
+    }
+
 
 }
