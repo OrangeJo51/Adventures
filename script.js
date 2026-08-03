@@ -454,7 +454,11 @@ createCard(idea);
 
 function addWishlist(id){
 
-    if(!wishlist.includes(id)){
+    if(wishlist.includes(id)){
+
+        wishlist = wishlist.filter(item => item !== id);
+
+    } else {
 
         wishlist.push(id);
 
@@ -475,7 +479,11 @@ function addWishlist(id){
 
 function addCompleted(id){
 
-    if(!completed.includes(id)){
+    if(completed.includes(id)){
+
+        completed = completed.filter(item => item !== id);
+
+    } else {
 
         completed.push(id);
 
