@@ -13,9 +13,9 @@ const datesSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQUzK_SGZ
 
 let dateIdeas = [];
 
-let wishlist = [];
+let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
-let completed = [];
+let completed = JSON.parse(localStorage.getItem("completed")) || [];
 
 
 // =============================
@@ -454,18 +454,20 @@ createCard(idea);
 
 function addWishlist(id){
 
+    if(!wishlist.includes(id)){
 
-if(!wishlist.includes(id)){
+        wishlist.push(id);
 
-
-wishlist.push(id);
-
-
-}
+    }
 
 
-updateSavedPages();
+    localStorage.setItem(
+        "wishlist",
+        JSON.stringify(wishlist)
+    );
 
+
+    updateSavedPages();
 
 }
 
@@ -478,6 +480,13 @@ function addCompleted(id){
         completed.push(id);
 
     }
+
+
+    localStorage.setItem(
+        "completed",
+        JSON.stringify(completed)
+    );
+
 
     updateSavedPages();
 
