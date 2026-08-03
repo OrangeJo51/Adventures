@@ -581,39 +581,44 @@ function removeCompleted(id){
 
 function updateSavedPages(){
 
-const wishlistBox =
-document.getElementById("wishlistContainer");
+    const wishlistBox =
+    document.getElementById("wishlistContainer");
 
-const completedBox =
-document.getElementById("completedContainer");
+    const completedBox =
+    document.getElementById("completedContainer");
 
-if(wishlistBox){
 
-    wishlistBox.innerHTML = "";
+    if(wishlistBox){
 
-    wishlist.forEach(id=>{
+        wishlistBox.innerHTML = "";
 
-        wishlistBox.innerHTML +=
-        createSavedCard(id,"wishlist");
+        dateIdeas
+        .filter(idea => idea.Wishlist === "TRUE")
+        .forEach(idea => {
 
-    });
+            wishlistBox.innerHTML +=
+            createSavedCard(idea.ID, "wishlist");
 
-}
+        });
 
-if(completedBox){
+    }
 
-    completedBox.innerHTML = "";
 
-    completed.forEach(id=>{
 
-        completedBox.innerHTML +=
-        createSavedCard(id,"completed");
+    if(completedBox){
 
-    });
+        completedBox.innerHTML = "";
 
-}
+        dateIdeas
+        .filter(idea => idea.Completed === "TRUE")
+        .forEach(idea => {
 
-displayDates();
+            completedBox.innerHTML +=
+            createSavedCard(idea.ID, "completed");
+
+        });
+
+    }
 
 }
 
