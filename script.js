@@ -300,7 +300,61 @@ async function loadDates(){
 // =============================
 
 
-function createCard(idea){
+function createCard(idea, location = "home"){
+
+let buttons = "";
+
+
+if(location === "home"){
+
+    buttons = `
+
+    <button onclick="addWishlist('${idea.ID}')">
+        ❤️ Wishlist
+    </button>
+
+
+    <button onclick="addCompleted('${idea.ID}')">
+        ✅ Finished
+    </button>
+
+    `;
+
+}
+
+
+
+if(location === "wishlist"){
+
+    buttons = `
+
+    <button onclick="removeWishlist('${idea.ID}')">
+        💔 Remove Wishlist
+    </button>
+
+
+    <button onclick="addCompleted('${idea.ID}')">
+        ✅ Finished
+    </button>
+
+    `;
+
+}
+
+
+
+if(location === "completed"){
+
+    buttons = `
+
+    <button onclick="removeCompleted('${idea.ID}')">
+        ↩️ Undo Completed
+    </button>
+
+    `;
+
+}
+
 
 
 return `
@@ -310,7 +364,6 @@ return `
 
 
 <div class="card-image">
-
 
 ${
 idea.Image && idea.Image.startsWith("http")
@@ -325,23 +378,18 @@ idea.Image || "📍"
 
 }
 
-
 </div>
 
 
 
 <h2>
-
 ${idea.Name}
-
 </h2>
 
 
 
 <p>
-
 ${idea.Description}
-
 </p>
 
 
@@ -357,9 +405,11 @@ ${idea.Description}
 ${idea.Tags
 .split("|")
 .map(tag => `
+
 <span>
 🏷️ ${tag.trim()}
 </span>
+
 `)
 .join("")
 }
@@ -386,21 +436,7 @@ ${idea.Tags
 
 <div class="card-buttons">
 
-
-<button onclick="addWishlist('${idea.ID}')">
-
-    ❤️ Wishlist
-
-</button>
-
-
-<button onclick="addCompleted('${idea.ID}')">
-
-    ✅ Finished
-
-</button>
-
-
+${buttons}
 
 </div>
 
@@ -410,7 +446,6 @@ ${idea.Tags
 
 
 `;
-
 
 }
 
@@ -437,7 +472,7 @@ dateIdeas
 
 
 container.innerHTML +=
-createCard(idea);
+createCard(idea,"home");
 
 
 
@@ -524,41 +559,7 @@ async function addCompleted(id){
 }
 
 
-function createSavedCard(id,type){
 
-    const idea = dateIdeas.find(item => item.ID === id);
-
-
-    if(!idea){
-
-        return "";
-
-    }
-
-
-return `
-
-<div class="date-card">
-
-    <h2>${idea.Name}</h2>
-
-    <p>${idea.Description}</p>
-
-    <button onclick="${
-        type==="wishlist"
-        ? `removeWishlist('${id}')`
-        : `removeCompleted('${id}')`
-    }">
-
-        🗑 Remove
-
-    </button>
-
-</div>
-
-`;
-
-}
 
 async function removeWishlist(id){
 
@@ -611,45 +612,61 @@ async function removeCompleted(id){
 
 function updateSavedPages(){
 
-    const wishlistBox =
-    document.getElementById("wishlistContainer");
-
-    const completedBox =
-    document.getElementById("completedContainer");
+const wishlistBox =
+document.getElementById("wishlistContainer");
 
 
-    if(wishlistBox){
-
-        wishlistBox.innerHTML = "";
-
-        dateIdeas
-        .filter(
-            idea => idea.Wishlist === "TRUE"
-            && idea.Completed !== "TRUE"
-        )
-        .forEach(idea => {
-
-            wishlistBox.innerHTML += createSavedCard(idea.ID,"wishlist");
-
-        });
-
-    }
+const completedBox =
+document.getElementById("completedContainer");
 
 
 
-    if(completedBox){
+if(wishlistBox){
 
-        completedBox.innerHTML = "";
+    wishlistBox.innerHTML = "";
 
-        dateIdeas
-        .filter(idea => idea.Completed === "TRUE")
-        .forEach(idea => {
 
-            completedBox.innerHTML += createSavedCard(idea.ID,"completed");
+    dateIdeas
+    .filter(
+        idea =>
+        idea.Wishlist === "TRUE"
+        &&
+        idea.Completed !== "TRUE"
+    )
+    .forEach(idea=>{
 
-        });
 
-    }
+        wishlistBox.innerHTML +=
+        createCard(idea,"wishlist");
+
+
+    });
+
+}
+
+
+
+if(completedBox){
+
+    completedBox.innerHTML = "";
+
+
+    dateIdeas
+    .filter(
+        idea =>
+        idea.Completed === "TRUE"
+    )
+    .forEach(idea=>{
+
+
+        completedBox.innerHTML +=
+        createCard(idea,"completed");
+
+
+    });
+
+}
+
 
 }
 
