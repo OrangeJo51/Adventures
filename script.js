@@ -8,6 +8,7 @@
 
 const datesSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQUzK_SGZvrt0LQmKTdJ6e_asYdeqllD-YI_ZgtgOAv0K08veeNqP8vAcVVRXe_OyuZKykMT0bPOBC3/pub?gid=0&single=true&output=csv";
 
+const appsScriptURL = "https://script.google.com/macros/s/AKfycbxO4vXh8LwXGo_kqcOpNDaGaxAXHzKnx9B1FohHFYwOUXlBKY_VB1gla8D0NKLyN6mD/exec";
 
 // DATA STORAGE
 
@@ -452,26 +453,35 @@ createCard(idea);
 
 
 
-function addWishlist(id){
+async function addWishlist(id){
 
-    if(wishlist.includes(id)){
+    const idea =
+    dateIdeas.find(item => item.ID === id);
 
-        wishlist = wishlist.filter(item => item !== id);
+    if(!idea) return;
 
-    } else {
+    const newValue =
+    idea.Wishlist === "TRUE"
+    ? "FALSE"
+    : "TRUE";
 
-        wishlist.push(id);
+    await fetch(appsScriptURL,{
 
-    }
+        method:"POST",
 
+        body:JSON.stringify({
 
-    localStorage.setItem(
-        "wishlist",
-        JSON.stringify(wishlist)
-    );
+            id:id,
 
+            field:"Wishlist",
 
-    updateSavedPages();
+            value:newValue
+
+        })
+
+    });
+
+    await loadDates();
 
 }
 
