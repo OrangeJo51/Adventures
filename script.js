@@ -298,6 +298,7 @@ async function loadDates() {
 
         console.log("Loaded Ideas:", dateIdeas);
 
+        console.log("FIRST IDEA:", dateIdeas[0]);
 
 
         displayDates();
@@ -347,11 +348,17 @@ function displayDates(){
         <div class="date-card">
 
 
-            <div class="card-image">
+<div class="card-image">
 
-                ${idea.Image || "📍"}
+${
+idea.Image && idea.Image.startsWith("http")
+?
+`<img src="${idea.Image}" alt="${idea.Name}">`
+:
+idea.Image || "📍"
+}
 
-            </div>
+</div>
 
 
 
@@ -371,25 +378,29 @@ function displayDates(){
 
 
 
-            <div class="card-info">
+<div class="card-info">
 
+    <span>
+        📂 ${idea.Category || ""}
+    </span>
 
-                <span>
-                    ${idea.Category || ""}
-                </span>
+    <span>
+        🏷️ ${idea.Tags || ""}
+    </span>
 
+    <span>
+        💰 ${idea.Price || ""}
+    </span>
 
-                <span>
-                    ${idea.Price || ""}
-                </span>
+    <span>
+        📍 ${idea.Distance || ""}
+    </span>
 
+    <span>
+        🥄 ${idea.Spoons || ""}
+    </span>
 
-                <span>
-                    ${idea.Spoons || ""}
-                </span>
-
-
-            </div>
+</div>
 
 
 
