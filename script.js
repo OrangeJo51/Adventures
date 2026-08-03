@@ -306,7 +306,7 @@ function createCard(idea){
 return `
 
 
-<div class="date-card">
+<div class="date-card" data-id="${idea.ID}">
 
 
 <div class="card-image">
