@@ -501,7 +501,7 @@ function addCompleted(id){
 }
 
 
-function createSavedCard(id){
+function createSavedCard(id,type){
 
     const idea = dateIdeas.find(item => item.ID === id);
 
@@ -513,21 +513,56 @@ function createSavedCard(id){
     }
 
 
-    return `
+return `
 
-    <div class="date-card">
+<div class="date-card">
 
-        <h2>
-            ${idea.Name}
-        </h2>
+    <h2>${idea.Name}</h2>
 
-        <p>
-            ${idea.Description}
-        </p>
+    <p>${idea.Description}</p>
 
-    </div>
+    <button onclick="${
+        type==="wishlist"
+        ? `removeWishlist('${id}')`
+        : `removeCompleted('${id}')`
+    }">
 
-    `;
+        🗑 Remove
+
+    </button>
+
+</div>
+
+`;
+
+}
+
+function removeWishlist(id){
+
+    wishlist =
+    wishlist.filter(item => item !== id);
+
+    localStorage.setItem(
+        "wishlist",
+        JSON.stringify(wishlist)
+    );
+
+    updateSavedPages();
+
+}
+
+
+function removeCompleted(id){
+
+    completed =
+    completed.filter(item => item !== id);
+
+    localStorage.setItem(
+        "completed",
+        JSON.stringify(completed)
+    );
+
+    updateSavedPages();
 
 }
 
@@ -536,35 +571,39 @@ function createSavedCard(id){
 
 function updateSavedPages(){
 
-
 const wishlistBox =
 document.getElementById("wishlistContainer");
-
 
 const completedBox =
 document.getElementById("completedContainer");
 
+if(wishlistBox){
 
+    wishlistBox.innerHTML = "";
 
-if(completedBox){
+    wishlist.forEach(id=>{
 
-    completedBox.innerHTML = "";
-
-
-    completed.forEach(item=>{
-
-        completedBox.innerHTML +=
-        createSavedCard(item);
+        wishlistBox.innerHTML +=
+        createSavedCard(id,"wishlist");
 
     });
 
 }
 
+if(completedBox){
 
-// Refresh cards so buttons update
+    completedBox.innerHTML = "";
+
+    completed.forEach(id=>{
+
+        completedBox.innerHTML +=
+        createSavedCard(id,"completed");
+
+    });
+
+}
 
 displayDates();
-
 
 }
 
@@ -679,6 +718,7 @@ ${tag}
 // START
 // =============================
 
+updateSavedPages();
 
 loadDates();
 // =============================
