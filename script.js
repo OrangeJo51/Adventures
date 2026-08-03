@@ -14,9 +14,7 @@ const appsScriptURL = "https://script.google.com/macros/s/AKfycbxO4vXh8LwXGo_kqc
 
 let dateIdeas = [];
 
-let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
-let completed = JSON.parse(localStorage.getItem("completed")) || [];
 
 
 // =============================
@@ -490,26 +488,38 @@ async function addWishlist(id){
 
 
 
-function addCompleted(id){
+async function addCompleted(id){
 
-    if(completed.includes(id)){
+    const idea =
+    dateIdeas.find(item => item.ID === id);
 
-        completed = completed.filter(item => item !== id);
-
-    } else {
-
-        completed.push(id);
-
-    }
+    if(!idea) return;
 
 
-    localStorage.setItem(
-        "completed",
-        JSON.stringify(completed)
-    );
+    const newValue =
+    idea.Completed === "TRUE"
+    ? "FALSE"
+    : "TRUE";
 
 
-    updateSavedPages();
+    await fetch(appsScriptURL,{
+
+        method:"POST",
+
+        body:JSON.stringify({
+
+            id:id,
+
+            field:"Completed",
+
+            value:newValue
+
+        })
+
+    });
+
+
+    await loadDates();
 
 }
 
@@ -550,35 +560,52 @@ return `
 
 }
 
-function removeWishlist(id){
+async function removeWishlist(id){
 
-    wishlist =
-    wishlist.filter(item => item !== id);
+    await fetch(appsScriptURL,{
 
-    localStorage.setItem(
-        "wishlist",
-        JSON.stringify(wishlist)
-    );
+        method:"POST",
 
-    updateSavedPages();
+        body:JSON.stringify({
 
-}
+            id:id,
+
+            field:"Wishlist",
+
+            value:"FALSE"
+
+        })
+
+    });
 
 
-function removeCompleted(id){
-
-    completed =
-    completed.filter(item => item !== id);
-
-    localStorage.setItem(
-        "completed",
-        JSON.stringify(completed)
-    );
-
-    updateSavedPages();
+    await loadDates();
 
 }
 
+
+async function removeCompleted(id){
+
+    await fetch(appsScriptURL,{
+
+        method:"POST",
+
+        body:JSON.stringify({
+
+            id:id,
+
+            field:"Completed",
+
+            value:"FALSE"
+
+        })
+
+    });
+
+
+    await loadDates();
+
+}
 
 
 
@@ -599,7 +626,7 @@ function updateSavedPages(){
         .filter(idea => idea.Wishlist === "TRUE")
         .forEach(idea => {
 
-            wishlistBox.innerHTML += createSavedCard(idea.ID);
+            wishlistBox.innerHTML += createSavedCard(idea.ID,"wishlist");
 
         });
 
@@ -615,7 +642,7 @@ function updateSavedPages(){
         .filter(idea => idea.Completed === "TRUE")
         .forEach(idea => {
 
-            completedBox.innerHTML += createSavedCard(idea.ID);
+            completedBox.innerHTML += createSavedCard(idea.ID,"completed");
 
         });
 
