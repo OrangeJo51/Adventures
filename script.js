@@ -1,72 +1,49 @@
-const datesSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQUzK_SGZvrt0LQmKTdJ6e_asYdeqllD-YI_ZgtgOAv0K08veeNqP8vAcVVRXe_OyuZKykMT0bPOBC3/pub?gid=0&single=true&output=csv";
 // =============================
-// SAVED LISTS
+// OUR ADVENTURES
+// Version 2 Script
 // =============================
 
-// =============================
-// SAVED LISTS
-// =============================
+
+// GOOGLE SHEET
+
+const datesSheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQUzK_SGZvrt0LQmKTdJ6e_asYdeqllD-YI_ZgtgOAv0K08veeNqP8vAcVVRXe_OyuZKykMT0bPOBC3/pub?gid=0&single=true&output=csv";
+
+
+// DATA STORAGE
+
+let dateIdeas = [];
 
 let wishlist = [];
 
 let completed = [];
 
 
-
-function createSavedCard(name) {
-
-
-    return `
-
-    <div class="date-card">
-
-        <h2>
-            ${name}
-        </h2>
-
-
-        <p>
-            Saved idea
-        </p>
-
-
-    </div>
-
-    `;
-
-}
 // =============================
-// OUR ADVENTURES
-// Main Functions
+// THEME
 // =============================
 
-
-// DARK / LIGHT MODE
 
 const themeButton = document.getElementById("themeToggle");
 
+
 themeButton.addEventListener("click", () => {
 
-    const body = document.body;
+    document.body.classList.toggle("light");
 
-    if (body.classList.contains("light")) {
+    document.body.classList.toggle("dark");
 
-        body.classList.remove("light");
-        body.classList.add("dark");
+
+    if(document.body.classList.contains("dark")){
 
         themeButton.textContent = "☀️";
 
     } else {
-
-        body.classList.remove("dark");
-        body.classList.add("light");
 
         themeButton.textContent = "🌙";
 
     }
 
 });
-
 
 
 // =============================
@@ -80,11 +57,11 @@ const pages = {
 
     scroll: document.getElementById("scrollPage"),
 
-    photos: document.getElementById("photosPage"),
-
     wishlist: document.getElementById("wishlistPage"),
 
     completed: document.getElementById("completedPage"),
+
+    surprise: document.getElementById("surprisePage"),
 
     add: document.getElementById("addPage")
 
@@ -92,165 +69,159 @@ const pages = {
 
 
 
-function showPage(pageName) {
+function showPage(pageName){
 
 
     Object.values(pages).forEach(page => {
 
-        page.classList.add("hidden");
+        if(page){
+
+            page.classList.add("hidden");
+
+        }
 
     });
 
 
-    pages[pageName].classList.remove("hidden");
+    if(pages[pageName]){
 
+        pages[pageName].classList.remove("hidden");
+
+    }
 
 }
 
 
 
-const navButtons = document.querySelectorAll(".navButton");
+document.querySelectorAll(".navButton")
+.forEach(button => {
 
 
-navButtons.forEach(button => {
+    button.addEventListener("click",()=>{
 
 
-    button.addEventListener("click", () => {
-
-
-        const selectedPage = button.dataset.page;
-
-
-        showPage(selectedPage);
+        showPage(button.dataset.page);
 
 
     });
 
 
 });
+
+
 // =============================
-// FILTER PANEL OPEN/CLOSE
+// FILTER PANEL
 // =============================
 
 
-const filterButton = document.getElementById("filterButton");
-
-const filterPanel = document.getElementById("filterPanel");
-
-const closeFilter = document.getElementById("closeFilter");
+const filterButton =
+document.getElementById("filterButton");
 
 
+const filterPanel =
+document.getElementById("filterPanel");
 
-filterButton.addEventListener("click", () => {
+
+const closeFilter =
+document.getElementById("closeFilter");
+
+
+
+if(filterButton){
+
+filterButton.addEventListener("click",()=>{
 
     filterPanel.classList.remove("hidden");
 
 });
 
-
-
-closeFilter.addEventListener("click", () => {
-
-    filterPanel.classList.add("hidden");
-
-});
-// =============================
-// WISHLIST + COMPLETED
-// =============================
-
-
-// =============================
-// WISHLIST + COMPLETED BUTTONS
-// =============================
-
-
-function updateSavedPages(){
-
-
-    document.getElementById("wishlistContainer").innerHTML = "";
-
-
-    document.getElementById("completedContainer").innerHTML = "";
-
-
-
-    wishlist.forEach(item => {
-
-
-        document.getElementById("wishlistContainer").innerHTML +=
-        createSavedCard(item);
-
-
-    });
-
-
-
-    completed.forEach(item => {
-
-
-        document.getElementById("completedContainer").innerHTML +=
-        createSavedCard(item);
-
-
-    });
-
-
 }
 
 
 
+if(closeFilter){
 
-document.querySelectorAll(
-".card-buttons button:first-child, .reel-actions button:first-child, .photo-card button"
-)
-.forEach(button => {
+closeFilter.addEventListener("click",()=>{
 
-
-    button.addEventListener("click",()=>{
-
-
-        wishlist.push("Skyline Drive Picnic");
-
-
-        updateSavedPages();
-
-
-    });
-
+    filterPanel.classList.add("hidden");
 
 });
 
+}
 
 
-
-document.querySelectorAll(
-".card-buttons button:last-child, .reel-actions button:last-child"
-)
-.forEach(button => {
-
-
-    button.addEventListener("click",()=>{
-
-
-        completed.push("Skyline Drive Picnic");
-
-
-        updateSavedPages();
-
-
-    });
-
-
-});
 // =============================
-// LOAD GOOGLE SHEET DATA
+// CSV READER
 // =============================
 
 
-let dateIdeas = [];
+function parseCSV(text){
+
+    const rows = [];
+
+    let row = [];
+
+    let value = "";
+
+    let insideQuotes = false;
 
 
-async function loadDates() {
+    for(let char of text){
+
+
+        if(char === '"'){
+
+            insideQuotes = !insideQuotes;
+
+        }
+
+
+        else if(char === "," && !insideQuotes){
+
+            row.push(value);
+
+            value = "";
+
+        }
+
+
+        else if(char === "\n" && !insideQuotes){
+
+            row.push(value);
+
+            rows.push(row);
+
+            row = [];
+
+            value = "";
+
+        }
+
+
+        else {
+
+            value += char;
+
+        }
+
+
+    }
+
+
+    row.push(value);
+
+    rows.push(row);
+
+
+    return rows;
+
+}
+// =============================
+// LOAD GOOGLE SHEET
+// =============================
+
+
+async function loadDates(){
 
 
     try {
@@ -262,31 +233,32 @@ async function loadDates() {
         const csvText = await response.text();
 
 
-        const rows = csvText.split("\n");
+        const rows = parseCSV(csvText);
 
 
-        const headers = rows[0].split(",");
+        const headers = rows[0].map(header => 
+            header.trim()
+        );
 
 
-
-        dateIdeas = rows.slice(1).map(row => {
-
-
-            const values = row.split(",");
-
+        dateIdeas = rows.slice(1)
+        .filter(row => row.length > 1)
+        .map(row => {
 
 
             let idea = {};
 
 
-            headers.forEach((header, index) => {
+            headers.forEach((header,index)=>{
 
 
-                idea[header.trim()] = values[index]?.trim();
+                idea[header] =
+                row[index]?.trim()
+                .replace(/^"|"$/g,"")
+                || "";
 
 
             });
-
 
 
             return idea;
@@ -295,17 +267,19 @@ async function loadDates() {
         });
 
 
-
         console.log("Loaded Ideas:", dateIdeas);
-
-        console.log("FIRST IDEA:", dateIdeas[0]);
 
 
         displayDates();
 
 
+        createFilters();
 
-    } catch(error) {
+
+    }
+
+
+    catch(error){
 
 
         console.log(
@@ -321,112 +295,398 @@ async function loadDates() {
 
 
 
-
-loadDates();
 // =============================
 // CREATE DATE CARDS
 // =============================
 
 
-function displayDates(){
+function createCard(idea){
 
 
-    const container =
-    document.getElementById("cardContainer");
+return `
 
 
-    container.innerHTML = "";
-
-
-
-    dateIdeas.forEach(idea => {
-
-
-        container.innerHTML += `
-
-
-        <div class="date-card">
+<div class="date-card">
 
 
 <div class="card-image">
 
+
 ${
 idea.Image && idea.Image.startsWith("http")
+
 ?
+
 `<img src="${idea.Image}" alt="${idea.Name}">`
+
 :
+
 idea.Image || "📍"
+
 }
+
 
 </div>
 
 
 
-            <h2>
+<h2>
 
-                ${idea.Name || "Unnamed Idea"}
+${idea.Name}
 
-            </h2>
+</h2>
 
 
 
-            <p>
+<p>
 
-                ${idea.Description || ""}
+${idea.Description}
 
-            </p>
+</p>
 
 
 
 <div class="card-info">
 
-    <span>
-        📂 ${idea.Category || ""}
-    </span>
 
-    <span>
-        🏷️ ${idea.Tags || ""}
-    </span>
+<span>
+📂 ${idea.Category}
+</span>
 
-    <span>
-        💰 ${idea.Price || ""}
-    </span>
 
-    <span>
-        📍 ${idea.Distance || ""}
-    </span>
+<span>
+🏷️ ${idea.Tags}
+</span>
 
-    <span>
-        🥄 ${idea.Spoons || ""}
-    </span>
+
+<span>
+💰 ${idea.Price}
+</span>
+
+
+<span>
+📍 ${idea.Distance}
+</span>
+
+
+<span>
+🥄 ${idea.Spoons}
+</span>
+
 
 </div>
 
 
 
-            <div class="card-buttons">
+<div class="card-buttons">
 
 
-                <button>
-                    ❤️ Wishlist
-                </button>
+<button onclick="addWishlist('${idea.Name}')">
+
+❤️ Wishlist
+
+</button>
 
 
-                <button>
-                    ✅ Finished
-                </button>
+
+<button onclick="addCompleted('${idea.Name}')">
+
+✅ Finished
+
+</button>
 
 
-            </div>
+
+</div>
 
 
-        </div>
+
+</div>
 
 
-        `;
-
-
-    });
+`;
 
 
 }
+
+
+
+
+function displayDates(){
+
+
+const container =
+document.getElementById("cardContainer");
+
+
+if(!container) return;
+
+
+container.innerHTML = "";
+
+
+
+dateIdeas.forEach(idea=>{
+
+
+container.innerHTML +=
+createCard(idea);
+
+
+
+});
+
+
+}
+
+
+
+// =============================
+// WISHLIST + COMPLETED
+// =============================
+
+
+
+function addWishlist(name){
+
+
+if(!wishlist.includes(name)){
+
+
+wishlist.push(name);
+
+
+}
+
+
+updateSavedPages();
+
+
+}
+
+
+
+
+function addCompleted(name){
+
+
+if(!completed.includes(name)){
+
+
+completed.push(name);
+
+
+}
+
+
+updateSavedPages();
+
+
+}
+
+
+
+function createSavedCard(name){
+
+
+return `
+
+
+<div class="date-card">
+
+
+<h2>
+
+${name}
+
+</h2>
+
+
+<p>
+
+Saved Adventure
+
+</p>
+
+
+</div>
+
+
+`;
+
+
+}
+
+
+
+
+function updateSavedPages(){
+
+
+
+const wishlistBox =
+document.getElementById("wishlistContainer");
+
+
+const completedBox =
+document.getElementById("completedContainer");
+
+
+
+if(wishlistBox){
+
+
+wishlistBox.innerHTML = "";
+
+
+wishlist.forEach(item=>{
+
+
+wishlistBox.innerHTML +=
+createSavedCard(item);
+
+
+});
+
+
+}
+
+
+
+
+if(completedBox){
+
+
+completedBox.innerHTML = "";
+
+
+completed.forEach(item=>{
+
+
+completedBox.innerHTML +=
+createSavedCard(item);
+
+
+});
+
+
+}
+
+
+
+}
+
+
+// =============================
+// FILTER CREATION
+// =============================
+
+
+function createFilters(){
+
+
+const categoryBox =
+document.getElementById("categoryFilters");
+
+
+const tagBox =
+document.getElementById("tagFilters");
+
+
+
+if(!categoryBox || !tagBox)
+return;
+
+
+
+let categories = [];
+
+let tags = [];
+
+
+
+dateIdeas.forEach(idea=>{
+
+
+if(idea.Category &&
+!categories.includes(idea.Category)){
+
+categories.push(idea.Category);
+
+}
+
+
+
+if(idea.Tags){
+
+idea.Tags.split("|")
+.forEach(tag=>{
+
+
+if(!tags.includes(tag.trim())){
+
+tags.push(tag.trim());
+
+}
+
+
+});
+
+
+}
+
+
+
+});
+
+
+
+categories.forEach(category=>{
+
+
+categoryBox.innerHTML += `
+
+<label>
+
+<input type="checkbox">
+
+${category}
+
+</label>
+
+`;
+
+
+});
+
+
+
+tags.forEach(tag=>{
+
+
+tagBox.innerHTML += `
+
+<label>
+
+<input type="checkbox">
+
+${tag}
+
+</label>
+
+`;
+
+
+});
+
+
+
+}
+
+
+// =============================
+// START
+// =============================
+
+
+loadDates();
