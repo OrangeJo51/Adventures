@@ -354,9 +354,15 @@ ${idea.Description}
 </span>
 
 
+${idea.Tags
+.split("|")
+.map(tag => `
 <span>
-🏷️ ${idea.Tags}
+🏷️ ${tag.trim()}
 </span>
+`)
+.join("")
+}
 
 
 <span>
