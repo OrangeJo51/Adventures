@@ -54,8 +54,6 @@ const pages = {
 
     home: document.getElementById("homePage"),
 
-    scroll: document.getElementById("scrollPage"),
-
     wishlist: document.getElementById("wishlistPage"),
 
     completed: document.getElementById("completedPage"),
@@ -852,5 +850,37 @@ createCard(idea);
 
 });
 
+
+}
+
+function randomDate(){
+
+    const available =
+    dateIdeas.filter(
+        idea => idea.Completed !== "TRUE"
+    );
+
+
+    if(available.length === 0){
+        return;
+    }
+
+
+    const random =
+    available[
+        Math.floor(Math.random() * available.length)
+    ];
+
+
+    const box =
+    document.getElementById("surpriseContainer");
+
+
+    if(box){
+
+        box.innerHTML =
+        createCard(random,"home");
+
+    }
 
 }
